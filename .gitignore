@@ -1,0 +1,112 @@
+### OS-Specific Files ###
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+### Node.js ###
+node_modules/
+pnpm-debug.log*
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+*.log
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env*.local
+
+
+
+# typescript
+*.tsbuildinfo
+
+
+### Next.js ###
+.next/
+out/
+.vercel/
+*.swp
+
+### Expo (React Native) ###
+.expo/
+.expo-shared/
+android/
+ios/
+*.iml
+*.gradle
+.gradle/
+local.properties
+*.keystore
+*.jks
+fastlane/
+!fastlane/README.md
+web-build/
+expo-env.d.ts
+
+### Temporary Files ###
+*.tmp
+*.temp
+*.swo
+*.swn
+*.bak
+*.pid
+*.seed
+*.pid.lock
+*.gz
+*.zip
+*.tar
+*.rar
+*.7z
+
+### Editor/IDE Files ###
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+### Build Output ###
+dist/
+build/
+coverage/
+*.map
+
+### Logs ###
+logs
+debug.log*
+
+
+### Firebase ###
+.firebase/
+.firebaserc
+*.firestore.rules
+*.firestore.indexes.json
+
+
+
+### CI/CD ###
+.github/
+.gitlab-ci.yml
+.circleci/
+
+### Miscellaneous ###
+*.sqlite
+*.sqlite3
+*.db
+*.db-shm
+*.db-wal
+
+### Custom Excludes ###
+*.pem
+*.crt
+*.key
+*.orig.*
+*.p8
+*.p12
+*.mobileprovision
+
+
+# Metro
+.metro-health-check*
