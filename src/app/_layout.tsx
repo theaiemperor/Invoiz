@@ -1,16 +1,13 @@
-import { Slot } from "expo-router";
-import "../static/global.css";
+import { Stack } from "expo-router";
 import { GluestackUIProvider } from "../components/ui/gluestack-ui-provider";
-import { SafeAreaView } from "react-native-safe-area-context";
+import "../static/global.css";
 
-export default function () {
+export default function RootLayout() {
   return (
-    <>
-      <GluestackUIProvider mode="system">
-        <SafeAreaView style={{ flex: 1 }}>
-          <Slot />
-        </SafeAreaView>
-      </GluestackUIProvider>
-    </>
+    <GluestackUIProvider mode="system">
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(routes)" />
+      </Stack>
+    </GluestackUIProvider>
   );
 }
