@@ -10,6 +10,7 @@ import { Button, ButtonText } from "../../ui/button";
 import { Card } from "../../ui/card";
 import { Heading } from "../../ui/heading";
 import { VStack } from "../../ui/vstack";
+import { useRouter } from "expo-router";
 
 function InvoiceForm() {
   // Schema validations
@@ -55,9 +56,10 @@ function InvoiceForm() {
       dueDate: new Date(new Date().setDate(new Date().getDate() + 14)),
     },
   });
+  const router = useRouter();
 
   function onSubmit(data: any) {
-    console.log(data);
+    router.push("/addItems");
   }
 
   useEffect(() => {
