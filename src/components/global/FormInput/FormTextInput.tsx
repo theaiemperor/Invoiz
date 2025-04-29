@@ -7,8 +7,8 @@ import {
   FormControlErrorText,
   FormControlLabel,
   FormControlLabelText,
-} from "../ui/form-control";
-import { Input, InputField } from "../ui/input";
+} from "../../ui/form-control";
+import { Input, InputField } from "../../ui/input";
 
 interface Props extends TextInputProps {
   name: string;
