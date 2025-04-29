@@ -1,8 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Platform } from "react-native";
 import { z } from "zod";
+import FormDateInput from "../../global/FormInput/FormDateInput";
 import FormTextInput from "../../global/FormInput/FormTextInput";
 import { Box } from "../../ui/box";
 import { Button, ButtonText } from "../../ui/button";
@@ -10,9 +11,9 @@ import { Card } from "../../ui/card";
 import { Heading } from "../../ui/heading";
 import { VStack } from "../../ui/vstack";
 
-export default function InvoiceForm() {
+function InvoiceForm() {
   // Schema validations
-  const senderInfoSchema = z.object({
+  const invoiceInfoSchema = z.object({
     // sender
     senderName: z
       .string({ required_error: "Name is Required" })
@@ -39,19 +40,29 @@ export default function InvoiceForm() {
   });
 
   // Targetting inputs for focus
+  const receiptNumber = useRef<HTMLInputElement | null>(null);
+  const receiptionNameRef = useRef<HTMLInputElement | null>(null);
   const receiptionAddressRef = useRef<HTMLInputElement | null>(null);
   const senderAddressRef = useRef<HTMLInputElement | null>(null);
 
   // Handing Forms
-  type SenderInfo = z.infer<typeof senderInfoSchema>;
+  type InvoiceInfo = z.infer<typeof invoiceInfoSchema>;
 
-  const form = useForm<SenderInfo>({
-    resolver: zodResolver(senderInfoSchema),
+  const form = useForm<InvoiceInfo>({
+    resolver: zodResolver(invoiceInfoSchema),
+    defaultValues: {
+      date: new Date(),
+      dueDate: new Date(new Date().setDate(new Date().getDate() + 14)),
+    },
   });
 
   function onSubmit(data: any) {
     console.log(data);
   }
+
+  useEffect(() => {
+    receiptNumber.current?.focus();
+  }, []);
 
   return (
     <Box className="w-full justify-center items-center">
@@ -65,13 +76,18 @@ export default function InvoiceForm() {
             <Heading>Invoice Info</Heading>
             <VStack className="gap-2 mt-3">
               <FormTextInput
+                reference={receiptNumber}
                 name="receiptNumber"
                 label="Reciept Number"
                 keyboardType="number-pad"
-                autoFocus
               />
-              <FormTextInput name="date" label="Date" />
-              <FormTextInput name="dueDate" label="Due Date" />
+              <FormDateInput name="date" label="Date" />
+
+              <FormDateInput
+                name="dueDate"
+                label="Due Date"
+                nextFocus={receiptionNameRef}
+              />
             </VStack>
           </Card>
 
@@ -79,6 +95,7 @@ export default function InvoiceForm() {
             <Heading>Recieption Info</Heading>
             <VStack className="gap-2 mt-3">
               <FormTextInput
+                reference={receiptionNameRef}
                 name="receiptionName"
                 label="Name"
                 next
@@ -121,3 +138,5 @@ export default function InvoiceForm() {
     </Box>
   );
 }
+
+export default memo(InvoiceForm);
