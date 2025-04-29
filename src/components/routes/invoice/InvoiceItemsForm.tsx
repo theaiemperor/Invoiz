@@ -1,7 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { Platform } from "react-native";
 import { z } from "zod";
 import FormTextInput from "../../global/FormInput/FormTextInput";
 import { Box } from "../../ui/box";
@@ -44,11 +43,7 @@ export default function () {
     <Box className="w-full justify-center items-center">
       <VStack className="gap-5 w-full max-w-md">
         <FormProvider {...form}>
-          {Platform.OS === "web" && (
-            <Heading className="text-center">Add Items</Heading>
-          )}
-
-          <Card>
+          <Card size="sm">
             <Heading>Item Info</Heading>
             <VStack className="gap-3 mt-3">
               <FormTextInput
