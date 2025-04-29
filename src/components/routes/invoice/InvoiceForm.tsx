@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import FormInput from "../../global/FormInput";
+import { Box } from "../../ui/box";
 import { Button, ButtonText } from "../../ui/button";
 import { Card } from "../../ui/card";
 import { Heading } from "../../ui/heading";
@@ -29,25 +30,27 @@ export default function InvoiceForm() {
   }
 
   return (
-    <Card className="w-96">
-      <VStack className="gap-5">
-        <FormProvider {...form}>
-          <Heading className="text-center">New Invoice</Heading>
+    <Box className="w-full justify-center items-center">
+      <Card className="w-full max-w-md ">
+        <VStack className="gap-5">
+          <FormProvider {...form}>
+            <Heading className="text-center">New Invoice</Heading>
 
-          <FormInput name="name" label="Name" />
-          <FormInput
-            name="address"
-            label="Address"
-            multiline
-            containerClassName="h-20 pt-2"
-          />
-          <FormInput name="taxID" label="Tax ID" />
-        </FormProvider>
+            <FormInput name="name" label="Name" />
+            <FormInput
+              name="address"
+              label="Address"
+              multiline
+              containerClassName="h-32 pt-2"
+            />
+            <FormInput name="taxID" label="Tax ID" />
+          </FormProvider>
 
-        <Button onPress={form.handleSubmit(onSubmit)}>
-          <ButtonText>Submit</ButtonText>
-        </Button>
-      </VStack>
-    </Card>
+          <Button onPress={form.handleSubmit(onSubmit)}>
+            <ButtonText>Next</ButtonText>
+          </Button>
+        </VStack>
+      </Card>
+    </Box>
   );
 }

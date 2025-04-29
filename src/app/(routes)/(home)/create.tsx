@@ -1,10 +1,10 @@
+import KeyboardAwareView from "@/src/components/global/KeyboardAwareView";
 import InvoiceForm from "@/src/components/routes/invoice/InvoiceForm";
-import { HStack } from "@/src/components/ui/hstack";
 
 export default function () {
   return (
-    <HStack className="p-2 w-full justify-center">
+    <KeyboardAwareView centerContent>
       <InvoiceForm />
-    </HStack>
+    </KeyboardAwareView>
   );
 }

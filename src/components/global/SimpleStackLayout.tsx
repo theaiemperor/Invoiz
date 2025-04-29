@@ -1,13 +1,14 @@
 import { useBreakpointValue } from "@/src/components/ui/utils/use-break-point-value";
 import { Slot, Stack } from "expo-router";
+import { PropsWithChildren } from "react";
 import { Platform } from "react-native";
 
-interface Props {
+interface Props extends PropsWithChildren {
   name?: string;
   title: string;
 }
 
-export default function ({ name, title }: Props) {
+export default function ({ name, title, children }: Props) {
   const hideStack = useBreakpointValue({ md: true });
 
   if (Platform.OS === "web" && hideStack) {
@@ -16,6 +17,7 @@ export default function ({ name, title }: Props) {
   return (
     <Stack>
       <Stack.Screen name={name || "index"} options={{ title }} />
+      {children}
     </Stack>
   );
 }
