@@ -13,6 +13,7 @@
   "dependencies": {
     "@expo/html-elements": "0.4.2",
     "@expo/metro-runtime": "~4.0.1",
+    "@gluestack-ui/alert-dialog": "^0.1.38",
     "@gluestack-ui/button": "^1.0.14",
     "@gluestack-ui/divider": "^0.1.10",
     "@gluestack-ui/form-control": "^0.1.19",
@@ -24,6 +25,7 @@
     "@gluestack-ui/overlay": "^0.1.22",
     "@gluestack-ui/toast": "^1.0.9",
     "@hookform/resolvers": "^5.0.1",
+    "@legendapp/motion": "^2.4.0",
     "expo": "~52.0.42",
     "expo-router": "~4.0.20",
     "expo-status-bar": "~2.0.1",

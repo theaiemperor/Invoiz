@@ -1,16 +1,19 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "expo-router";
 import { memo, useEffect, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Platform } from "react-native";
 import { z } from "zod";
 import FormDateInput from "../../global/FormInput/FormDateInput";
 import FormTextInput from "../../global/FormInput/FormTextInput";
+import useCreateInvoice, {
+  ICreateInvoiceProps,
+} from "../../store/useCreateInvoice";
 import { Box } from "../../ui/box";
 import { Button, ButtonText } from "../../ui/button";
 import { Card } from "../../ui/card";
 import { Heading } from "../../ui/heading";
 import { VStack } from "../../ui/vstack";
-import { useRouter } from "expo-router";
 
 function InvoiceForm() {
   // Schema validations
@@ -25,24 +28,25 @@ function InvoiceForm() {
     taxID: z.string().optional(),
 
     // receiver
-    receiptionName: z
+    recipientName: z
       .string({ required_error: "Name is Required" })
       .min(3, { message: "Minimum length will be 3." }),
-    receiptionAddress: z
+    recipientAddress: z
       .string({ required_error: "Address is Required." })
       .min(3, { message: "Minimum length will be 3." }),
 
     // receipt
-    receiptNumber: z.coerce.number({
+    recieptNumber: z.coerce.number({
       required_error: "Receipt Number is Required",
     }),
     date: z.coerce.date({ required_error: "Date is Required" }),
     dueDate: z.coerce.date({ required_error: "Due Date is Required" }),
   });
 
+  const { data, addInfo } = useCreateInvoice((v) => v);
+
   // Targetting inputs for focus
-  const receiptNumber = useRef<HTMLInputElement | null>(null);
-  const receiptionNameRef = useRef<HTMLInputElement | null>(null);
+  const recieptNumberRef = useRef<HTMLInputElement | null>(null);
   const receiptionAddressRef = useRef<HTMLInputElement | null>(null);
   const senderAddressRef = useRef<HTMLInputElement | null>(null);
 
@@ -52,18 +56,21 @@ function InvoiceForm() {
   const form = useForm<InvoiceInfo>({
     resolver: zodResolver(invoiceInfoSchema),
     defaultValues: {
-      date: new Date(),
-      dueDate: new Date(new Date().setDate(new Date().getDate() + 14)),
+      date: data?.date || new Date(),
+      dueDate:
+        data?.dueDate ||
+        new Date(new Date().setDate(new Date().getDate() + 14)),
     },
   });
   const router = useRouter();
 
-  function onSubmit(data: any) {
+  function onSubmit(data: Omit<ICreateInvoiceProps, "items">) {
+    addInfo({ ...data, items: [] });
     router.push("/addItems");
   }
 
   useEffect(() => {
-    receiptNumber.current?.focus();
+    recieptNumberRef.current?.focus();
   }, []);
 
   return (
@@ -78,18 +85,13 @@ function InvoiceForm() {
             <Heading>Invoice Info</Heading>
             <VStack className="gap-2 mt-3">
               <FormTextInput
-                reference={receiptNumber}
-                name="receiptNumber"
+                reference={recieptNumberRef}
+                name="recieptNumber"
                 label="Reciept Number"
                 keyboardType="number-pad"
               />
               <FormDateInput name="date" label="Date" />
-
-              <FormDateInput
-                name="dueDate"
-                label="Due Date"
-                nextFocus={receiptionNameRef}
-              />
+              <FormDateInput name="dueDate" label="Due Date" />
             </VStack>
           </Card>
 
@@ -97,15 +99,13 @@ function InvoiceForm() {
             <Heading>Recieption Info</Heading>
             <VStack className="gap-2 mt-3">
               <FormTextInput
-                reference={receiptionNameRef}
-                name="receiptionName"
+                name="recipientName"
                 label="Name"
                 next
                 nextFocus={receiptionAddressRef}
               />
               <FormTextInput
-                reference={receiptionAddressRef}
-                name="receiptionAddress"
+                name="recipientAddress"
                 label="Address"
                 multiline
                 containerClassName="h-32 pt-2"
