@@ -2,7 +2,6 @@
 import React, { PropsWithChildren, useEffect, useLayoutEffect } from "react";
 import { config } from "./config";
 import { OverlayProvider } from "@gluestack-ui/overlay";
-import { ToastProvider } from "@gluestack-ui/toast";
 import { setFlushStyles } from "@gluestack-ui/nativewind-utils/flush";
 import script from "./script";
 
@@ -84,9 +83,7 @@ export function GluestackUIProvider({ mode = "light", ...props }: Props) {
           __html: `(${script.toString()})('${mode}')`,
         }}
       />
-      <OverlayProvider>
-        <ToastProvider>{props.children}</ToastProvider>
-      </OverlayProvider>
+      <OverlayProvider>{props.children}</OverlayProvider>
     </>
   );
 }

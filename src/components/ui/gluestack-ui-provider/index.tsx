@@ -2,7 +2,6 @@ import React, { PropsWithChildren, useEffect } from "react";
 import { config } from "./config";
 import { View, ViewProps } from "react-native";
 import { OverlayProvider } from "@gluestack-ui/overlay";
-import { ToastProvider } from "@gluestack-ui/toast";
 import { useColorScheme } from "nativewind";
 
 interface Props extends PropsWithChildren {
@@ -27,9 +26,7 @@ export function GluestackUIProvider({ mode = "dark", ...props }: Props) {
         props.style,
       ]}
     >
-      <OverlayProvider>
-        <ToastProvider>{props.children}</ToastProvider>
-      </OverlayProvider>
+      <OverlayProvider>{props.children}</OverlayProvider>
     </View>
   );
 }

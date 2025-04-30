@@ -16,12 +16,12 @@ export default function (props: IInvoiceItem) {
         </VStack>
         <VStack>
           <Text className="md:text-xs">Price</Text>
-          <Text className="text-center font-bold ">{props.price} Rs.</Text>
+          <Text className="text-center font-bold ">₹{props.price}</Text>
         </VStack>
         <VStack>
           <Text className="md:text-xs">Total</Text>
           <Text className="text-center font-bold">
-            {(props.quantity * props.price).toFixed(2)} Rs.
+            ₹{(props.quantity * props.price).toFixed(2)}
           </Text>
         </VStack>
       </HStack>

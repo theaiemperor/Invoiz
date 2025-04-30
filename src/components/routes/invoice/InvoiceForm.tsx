@@ -64,8 +64,8 @@ function InvoiceForm() {
   });
   const router = useRouter();
 
-  function onSubmit(data: Omit<ICreateInvoiceProps, "items">) {
-    addInfo({ ...data, items: [] });
+  function onSubmit(data: Omit<ICreateInvoiceProps, "items" | "total">) {
+    addInfo({ ...data, items: [], total: 0 });
     router.push("/addItems");
   }
 

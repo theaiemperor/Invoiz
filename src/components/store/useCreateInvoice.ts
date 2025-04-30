@@ -16,6 +16,7 @@ export interface ICreateInvoiceProps {
   senderAddress: string;
   taxID?: string;
   items: IInvoiceItem[];
+  total: number;
 }
 
 export interface ICreateInvoiceStore {
@@ -37,6 +38,8 @@ export default create<ICreateInvoiceStore>((set) => ({
           ...state,
           data: {
             ...state.data,
+            total:
+              (+state.data.total || 0) + itemData.price * itemData.quantity,
             items: [itemData, ...(state.data?.items || [])],
           },
         };

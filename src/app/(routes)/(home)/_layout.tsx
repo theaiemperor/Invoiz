@@ -6,6 +6,7 @@ export default function () {
     <SimpleStackLayout title="Home">
       <Stack.Screen name="create" options={{ title: "Create New Invoice" }} />
       <Stack.Screen name="addItems" options={{ title: "Add Items" }} />
+      <Stack.Screen name="preview" options={{ title: "Preview Invoice" }} />
     </SimpleStackLayout>
   );
 }

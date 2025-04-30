@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link, useRouter } from "expo-router";
+import { Link } from "expo-router";
 import { ArrowRightIcon } from "lucide-react-native";
 import { useEffect, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -37,7 +37,6 @@ export default function () {
   const { data, addItem } = useCreateInvoice((data) => data);
   const [showDialog, setShowDialog] = useState(false);
   const quantityRef = useRef<HTMLInputElement | null>(null);
-  const router = useRouter();
 
   // Handing Forms
   type ItemsInfo = z.infer<typeof itemsSchema>;
@@ -98,7 +97,7 @@ export default function () {
               </HStack>
               <Text>
                 Price for {quantity > 1 ? "items" : "item"} will be{" "}
-                {totalPrice === "NaN" ? "..." : totalPrice + " Rs."}
+                {totalPrice === "NaN" ? "..." : "₹" + totalPrice}
               </Text>
               <ButtonGroup flexDirection="row">
                 <Button
