@@ -1,5 +1,13 @@
-import { Text } from "@/src/components/ui/text";
+import Appearance from "@/src/components/routes/settings/ui/Appearance";
+import { Box } from "@/src/components/ui/box";
+import { Card } from "@/src/components/ui/card";
 
 export default function () {
-  return <Text>You can manage Settings from here</Text>;
+  return (
+    <Box className="p-2 max-w-md w-full self-center">
+      <Card>
+        <Appearance />
+      </Card>
+    </Box>
+  );
 }

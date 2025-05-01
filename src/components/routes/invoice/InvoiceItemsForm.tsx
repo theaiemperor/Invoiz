@@ -5,7 +5,9 @@ import { useEffect, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import FormTextInput from "../../global/FormInput/FormTextInput";
-import useCreateInvoice, { IInvoiceItem } from "../../store/useCreateInvoice";
+import useCreateInvoice, {
+  IInvoiceItem,
+} from "../../../store/useCreateInvoice";
 import {
   AlertDialog,
   AlertDialogBackdrop,
@@ -34,7 +36,7 @@ export default function () {
     }),
   });
 
-  const { data, addItem } = useCreateInvoice((data) => data);
+  const { data, addItem } = useCreateInvoice();
   const [showDialog, setShowDialog] = useState(false);
   const quantityRef = useRef<HTMLInputElement | null>(null);
 
@@ -107,7 +109,7 @@ export default function () {
                   <ButtonText>Add</ButtonText>
                 </Button>
                 <Link href={"/preview"} asChild>
-                  <Button>
+                  <Button isDisabled={data?.items.length === 0}>
                     <ButtonText>Next</ButtonText>
                     <ButtonIcon as={ArrowRightIcon} />
                   </Button>

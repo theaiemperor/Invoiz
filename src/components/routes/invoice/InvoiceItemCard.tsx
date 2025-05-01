@@ -1,4 +1,4 @@
-import { IInvoiceItem } from "../../store/useCreateInvoice";
+import { IInvoiceItem } from "../../../store/useCreateInvoice";
 import { Card } from "../../ui/card";
 import { Heading } from "../../ui/heading";
 import { HStack } from "../../ui/hstack";

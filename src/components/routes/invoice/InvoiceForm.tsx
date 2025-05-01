@@ -8,7 +8,7 @@ import FormDateInput from "../../global/FormInput/FormDateInput";
 import FormTextInput from "../../global/FormInput/FormTextInput";
 import useCreateInvoice, {
   ICreateInvoiceProps,
-} from "../../store/useCreateInvoice";
+} from "../../../store/useCreateInvoice";
 import { Box } from "../../ui/box";
 import { Button, ButtonText } from "../../ui/button";
 import { Card } from "../../ui/card";
@@ -43,7 +43,7 @@ function InvoiceForm() {
     dueDate: z.coerce.date({ required_error: "Due Date is Required" }),
   });
 
-  const { data, addInfo } = useCreateInvoice((v) => v);
+  const { data, addInfo } = useCreateInvoice();
 
   // Targetting inputs for focus
   const recieptNumberRef = useRef<HTMLInputElement | null>(null);
@@ -105,6 +105,7 @@ function InvoiceForm() {
                 nextFocus={receiptionAddressRef}
               />
               <FormTextInput
+                reference={receiptionAddressRef}
                 name="recipientAddress"
                 label="Address"
                 multiline

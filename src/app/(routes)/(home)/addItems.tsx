@@ -1,6 +1,6 @@
 import InvoiceItemCard from "@/src/components/routes/invoice/InvoiceItemCard";
 import InvoiceItemsForm from "@/src/components/routes/invoice/InvoiceItemsForm";
-import useCreateInvoice from "@/src/components/store/useCreateInvoice";
+import useCreateInvoice from "@/src/store/useCreateInvoice";
 import { Box } from "@/src/components/ui/box";
 import { Heading } from "@/src/components/ui/heading";
 import { ScrollView } from "react-native";

@@ -1,5 +1,4 @@
 import InvoiceTemplate from "@/src/components/routes/invoice/InvoiceTemplate";
-import { ICreateInvoiceProps } from "@/src/components/store/useCreateInvoice";
 import { Box } from "@/src/components/ui/box";
 import {
   Button,
@@ -8,215 +7,21 @@ import {
   ButtonText,
 } from "@/src/components/ui/button";
 import { Heading } from "@/src/components/ui/heading";
+import useCreateInvoice from "@/src/store/useCreateInvoice";
+import * as Print from "expo-print";
+import * as Sharing from "expo-sharing";
 import { PrinterIcon, ShareIcon } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { Platform } from "react-native";
 import WebView from "react-native-webview";
-import * as Sharing from "expo-sharing";
-import * as Print from "expo-print";
 
-import { useRouter } from "expo-router";
 import { moveAsync } from "expo-file-system";
+import { useRouter } from "expo-router";
 
 export default function () {
-  // const { data } = useCreateInvoice();
+  const { data } = useCreateInvoice();
   const router = useRouter();
-  const rawData: ICreateInvoiceProps = {
-    recieptNumber: 121,
-    date: new Date(),
-    dueDate: new Date(),
-    senderName: "Arman Enterprises",
-    senderAddress: "Mirzawali mer, tibbi, Hanumangarh",
-    recipientName: "Physics wallah",
-    recipientAddress: "Delhi",
-    total: 454500,
-    items: [
-      {
-        name: "React website",
-        price: 50000,
-        quantity: 5,
-      },
-      {
-        name: "Admin Dashboard",
-        price: 10000,
-        quantity: 4,
-      },
-      {
-        name: "Mobile App",
-        price: 70000,
-        quantity: 2,
-      },
-      {
-        name: "Online hub platform",
-        price: 100000,
-        quantity: 1,
-      },
-      {
-        name: "React website",
-        price: 50000,
-        quantity: 5,
-      },
-      {
-        name: "Admin Dashboard",
-        price: 10000,
-        quantity: 4,
-      },
-      {
-        name: "Mobile App",
-        price: 70000,
-        quantity: 2,
-      },
-      {
-        name: "Online hub platform",
-        price: 100000,
-        quantity: 1,
-      },
-      {
-        name: "React website",
-        price: 50000,
-        quantity: 5,
-      },
-      {
-        name: "Admin Dashboard",
-        price: 10000,
-        quantity: 4,
-      },
-      {
-        name: "Mobile App",
-        price: 70000,
-        quantity: 2,
-      },
-      {
-        name: "Online hub platform",
-        price: 100000,
-        quantity: 1,
-      },
-      {
-        name: "React website",
-        price: 50000,
-        quantity: 5,
-      },
-      {
-        name: "Admin Dashboard",
-        price: 10000,
-        quantity: 4,
-      },
-      {
-        name: "Mobile App",
-        price: 70000,
-        quantity: 2,
-      },
-      {
-        name: "Online hub platform",
-        price: 100000,
-        quantity: 1,
-      },
-      {
-        name: "React website",
-        price: 50000,
-        quantity: 5,
-      },
-      {
-        name: "Admin Dashboard",
-        price: 10000,
-        quantity: 4,
-      },
-      {
-        name: "Mobile App",
-        price: 70000,
-        quantity: 2,
-      },
-      {
-        name: "Online hub platform",
-        price: 100000,
-        quantity: 1,
-      },
-      {
-        name: "React website",
-        price: 50000,
-        quantity: 5,
-      },
-      {
-        name: "Admin Dashboard",
-        price: 10000,
-        quantity: 4,
-      },
-      {
-        name: "Mobile App",
-        price: 70000,
-        quantity: 2,
-      },
-      {
-        name: "Online hub platform",
-        price: 100000,
-        quantity: 1,
-      },
-      {
-        name: "React website",
-        price: 50000,
-        quantity: 5,
-      },
-      {
-        name: "Admin Dashboard",
-        price: 10000,
-        quantity: 4,
-      },
-      {
-        name: "Mobile App",
-        price: 70000,
-        quantity: 2,
-      },
-      {
-        name: "Online hub platform",
-        price: 100000,
-        quantity: 1,
-      },
-      {
-        name: "React website",
-        price: 50000,
-        quantity: 5,
-      },
-      {
-        name: "Admin Dashboard",
-        price: 10000,
-        quantity: 4,
-      },
-      {
-        name: "Mobile App",
-        price: 70000,
-        quantity: 2,
-      },
-      {
-        name: "Online hub platform",
-        price: 100000,
-        quantity: 1,
-      },
-      {
-        name: "React website",
-        price: 50000,
-        quantity: 5,
-      },
-      {
-        name: "Admin Dashboard",
-        price: 10000,
-        quantity: 4,
-      },
-      {
-        name: "Mobile App",
-        price: 70000,
-        quantity: 2,
-      },
-      {
-        name: "Online hub platform",
-        price: 100000,
-        quantity: 1,
-      },
-    ],
-  };
-
-  //
-  // Sharing PDF
-  const data = InvoiceTemplate(rawData);
+  const parsedData = data && InvoiceTemplate(data);
 
   const [canShare, setCanShare] = useState(false);
 
@@ -237,8 +42,8 @@ export default function () {
   }
 
   async function sharePDF() {
-    const { uri } = await Print.printToFileAsync({ html: data });
-    const pdfName = "Invoice_" + rawData.recieptNumber + ".pdf";
+    const { uri } = await Print.printToFileAsync({ html: parsedData || "" });
+    const pdfName = "Invoice_" + data?.recieptNumber + ".pdf";
     const newName = getPdfDirectory(uri) + "/" + pdfName;
     await moveAsync({ from: uri, to: newName });
 
@@ -256,7 +61,7 @@ export default function () {
       const printWindow = window.open("", "_blank");
       if (printWindow) {
         printWindow.document.open();
-        printWindow.document.write(data);
+        printWindow.document.write(parsedData || "");
         printWindow.document.close();
 
         printWindow.onload = () => {
@@ -265,7 +70,7 @@ export default function () {
         };
       }
     } else {
-      await Print.printAsync({ html: data });
+      await Print.printAsync({ html: parsedData || "" });
     }
   }
   useEffect(() => {
@@ -286,11 +91,11 @@ export default function () {
         )}
         {Platform.OS === "web" ? (
           <div
-            className="border rounded-md border-black overflow-y-auto p-2"
-            dangerouslySetInnerHTML={{ __html: data }}
+            className="border rounded-md border-background-300 text-black bg-white overflow-y-auto p-2"
+            dangerouslySetInnerHTML={{ __html: parsedData || "" }}
           />
         ) : (
-          <WebView source={{ html: data }} />
+          <WebView source={{ html: parsedData || "" }} />
         )}
 
         <ButtonGroup
